@@ -13,6 +13,7 @@ import FanAccessory from './FanAccessory';
 import GarageDoorAccessory from './GarageDoorAccessory';
 import WindowAccessory from './WindowAccessory';
 import WindowCoveringAccessory from './WindowCoveringAccessory';
+import LockAccessory from './LockAccessory';
 import ThermostatAccessory from './ThermostatAccessory';
 import HeaterAccessory from './HeaterAccessory';
 import ValveAccessory from './ValveAccessory';
@@ -94,6 +95,8 @@ export default class AccessoryFactory {
       case 'clkg':
         handler = new WindowCoveringAccessory(platform, accessory);
         break;
+      case 'jtmspro':
+        handler = new LockAccessory(plaform, accessory);
       case 'wk':
       case 'wkf':
         handler = new ThermostatAccessory(platform, accessory);
