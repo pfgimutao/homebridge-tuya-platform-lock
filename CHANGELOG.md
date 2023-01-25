@@ -1,6 +1,8 @@
 # Changelog
 
 ## [1.7.0] - (unreleased)
+- Add support for Smart Lock (`jtmsppro`).
+    - Only working function is status of lock
 
 ### Added
 - Add scene support. (#118)
