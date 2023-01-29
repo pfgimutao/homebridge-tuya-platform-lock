@@ -1,3 +1,4 @@
+import { PlatformAccessory} from 'homebridge';
 import { TuyaPlatform } from '../platform';
 import BaseAccessory from './BaseAccessory';
 
