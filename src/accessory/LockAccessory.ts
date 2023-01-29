@@ -1,6 +1,4 @@
 import { PlatformAccessory} from 'homebridge';
-import { TuyaPlatform } from '../platform';
-import BaseAccessory from './BaseAccessory';
 
 export class TuyaSmartLockJTMSPro {
   private locked: boolean;
@@ -9,23 +7,23 @@ export class TuyaSmartLockJTMSPro {
   private tuyaDevice: TuyaDevice;
 
   constructor(accessory: PlatformAccessory, deviceId: string, localKey: string) {
-      this.locked = false;
-      this.accessory = accessory;
-      this.lockService = this.accessory.getService(Service.LockMechanism);
-      this.tuyaDevice = new TuyaDevice({
-          id: deviceId,
-          key: localKey
+    this.locked = false;
+    this.accessory = accessory;
+    this.lockService = this.accessory.getService(Service.LockMechanism);
+    this.tuyaDevice = new TuyaDevice({
+        id: deviceId,
+        key: localKey
       });
-      this.tuyaDevice.on('connected', () => {
-          this.tuyaDevice.get({schema: true}).then(console.log);
-      });
-      this.tuyaDevice.connect();
-      this.lockService.getCharacteristic(Characteristic.LockCurrentState)
-          .on('get', this.getLockState.bind(this));
-      this.lockService.getCharacteristic(Characteristic.LockTargetState)
-          .on('get', this.getLockState.bind(this))
-          .on('set', this.setLockState.bind(this));
-  }
+    this.tuyaDevice.on('connected', () => {
+        this.tuyaDevice.get({schema: true}).then(console.log);
+    });
+    this.tuyaDevice.connect();
+    this.lockService.getCharacteristic(Characteristic.LockCurrentState)
+        .on('get', this.getLockState.bind(this));
+    this.lockService.getCharacteristic(Characteristic.LockTargetState)
+        .on('get', this.getLockState.bind(this))
+        .on('set', this.setLockState.bind(this));
+}
 
   getLockState(callback: (error: any, state: number) => void) {
       this.tuyaDevice.get({dps: '1'}).then((state) => {
