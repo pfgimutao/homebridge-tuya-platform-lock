@@ -12,11 +12,11 @@ export class TuyaSmartLockJTMSPro {
     this.accessory = accessory;
     this.lockService = this.accessory.getService(Service.LockMechanism);
     this.tuyaDevice = new TuyaDevice({
-        id: deviceId,
-        key: localKey,
+      id: deviceId,
+      key: localKey,
     });
     this.tuyaDevice.on('connected', () => {
-      this.tuyaDevice.get({schema: true}).then(console.log);
+      this.tuyaDevice.get({schema: true});
     });
     this.tuyaDevice.connect();
     this.lockService.getCharacteristic(Characteristic.LockCurrentState)
