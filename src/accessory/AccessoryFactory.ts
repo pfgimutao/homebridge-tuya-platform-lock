@@ -97,6 +97,7 @@ export default class AccessoryFactory {
         break;
       case 'jtmspro':
         handler = new LockAccessory(plaform, accessory);
+        break;
       case 'wk':
       case 'wkf':
         handler = new ThermostatAccessory(platform, accessory);
