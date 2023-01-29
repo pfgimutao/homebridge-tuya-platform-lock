@@ -1,4 +1,5 @@
 import { PlatformAccessory, Status } from 'homebridge';
+import { TuyaDeviceStatus } from '../device/TuyaDevice';
 import { TuyaPlatform } from '../platform';
 import BaseAccessory from './BaseAccessory';
 
