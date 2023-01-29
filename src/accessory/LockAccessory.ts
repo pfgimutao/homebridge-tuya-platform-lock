@@ -16,7 +16,7 @@ export class TuyaSmartLockJTMSPro {
       key: localKey,
     });
     this.tuyaDevice.on('connected', () => {
-      this.tuyaDevice.get({schema: true}).then((data) => {
+      this.tuyaDevice.get({schema: true}).then((data: any) => {
         log.debug('Tuya Device Connected', data);
       });
     });
