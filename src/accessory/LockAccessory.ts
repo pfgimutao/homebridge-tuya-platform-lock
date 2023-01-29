@@ -17,7 +17,7 @@ export class TuyaSmartLockJTMSPro {
     });
     this.tuyaDevice.on('connected', () => {
       this.tuyaDevice.get({schema: true}).then((data) => {
-        log.debug("Tuya Device Connected", data);
+        log.debug('Tuya Device Connected', data);
       });
     });
     this.tuyaDevice.connect();
@@ -48,9 +48,9 @@ export class TuyaSmartLockJTMSPro {
       await this.tuyaDevice.set({set: true, dps: 1});
       this.locked = true;
       this.lockService.updateCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
-      log.debug("JTMSPro Lock engaged");
+      log.debug('JTMSPro Lock engaged');
     } catch (err) {
-      log.debug("Error setting JTMSPro lock state: ", err);
+      log.debug('Error setting JTMSPro lock state: ', err);
     }
   }
 
@@ -59,9 +59,9 @@ export class TuyaSmartLockJTMSPro {
       await this.tuyaDevice.set({set: false, dps: 1});
       this.locked = false;
       this.lockService.updateCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED);
-      log.debug("JTMSPro Lock disengaged");
+      log.debug('JTMSPro Lock disengaged');
     } catch (err) {
-      log.debug("Error setting JTMSPro lock state: ", err);
+      log.debug('Error setting JTMSPro lock state: ', err);
     }
   }
 }
