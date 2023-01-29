@@ -16,7 +16,7 @@ export class TuyaSmartLockJTMSPro {
       key: localKey,
     });
     this.tuyaDevice.on('connected', () => {
-      this.tuyaDevice.get({schema: true}).then((data: any) => {
+      this.tuyaDevice.get({schema: true}).then((data) => {
         log.debug('Tuya Device Connected', data);
       });
     });
@@ -28,13 +28,13 @@ export class TuyaSmartLockJTMSPro {
       .on('set', this.setLockState.bind(this));
   }
 
-  getLockState(callback: (error: any, state: number) => void) {
+  getLockState(callback: (error, state: number) => void) {
     this.tuyaDevice.get({dps: '1'}).then((state) => {
       callback(null, state['1'] ? Characteristic.LockCurrentState.SECURED : Characteristic.LockCurrentState.UNSECURED);
     });
   }
 
-  setLockState(state: number, callback: (error: any) => void) {
+  setLockState(state: number, callback: (error) => void) {
     if (state === Characteristic.LockTargetState.SECURED) {
       this.lock();
     } else if (state === Characteristic.LockTargetState.UNSECURED) {
