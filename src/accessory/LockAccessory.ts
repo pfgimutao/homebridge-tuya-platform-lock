@@ -20,23 +20,23 @@ export default class LockAccessory extends BaseAccessory {
         });
     }
 
-  if (this.device.getDeviceFunction('unlock_app')) {
+    if (this.device.getDeviceFunction('unlock_app')) {
     // TODO
-    service.getCharacteristic(this.Characteristic.LockTargetState)
-      .onGet(() => {
-        const status = this.device.getDeviceStatus('unlock_app');
-        return (status?.value as number !== 0) ?
-          this.Characteristic.LockTargetState.UNSECURED :
-          this.Characteristic.LockTargetState.SECURED;
-      })
-      .onSet(value => {
-        const status = this.device.getDeviceStatus('unlock_app');
-        this.deviceManager.sendCommands(this.device.id, [{
-          code: status!.code,
-          value: (value === this.Characteristic.LockTargetState.UNSECURED) ? 1 : 0, // confused value
-        }]);
-      });
+      service.getCharacteristic(this.Characteristic.LockTargetState)
+        .onGet(() => {
+          const status = this.device.getDeviceStatus('unlock_app');
+          return (status?.value as number !== 0) ?
+            this.Characteristic.LockTargetState.UNSECURED :
+            this.Characteristic.LockTargetState.SECURED;
+        })
+        .onSet(value => {
+          const status = this.device.getDeviceStatus('unlock_app');
+          this.deviceManager.sendCommands(this.device.id, [{
+            code: status!.code,
+            value: (value === this.Characteristic.LockTargetState.UNSECURED) ? 1 : 0, // confused value
+          }]);
+        });
+    }
   }
-}
 
 }
