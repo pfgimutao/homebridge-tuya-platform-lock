@@ -1,7 +1,7 @@
 import { PlatformAccessory, Service, Characteristic } from 'homebridge';
 import { TuyaDevice } from 'tuyapi';
 
-export class TuyaSmartLockJTMSPro {
+export default class LockAccessory extends BaseAccessory {
   private locked: boolean;
   private accessory: PlatformAccessory;
   private lockService: Service;
