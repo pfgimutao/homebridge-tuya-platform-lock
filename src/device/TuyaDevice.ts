@@ -15,6 +15,18 @@ export enum TuyaDeviceSchemaType {
   Raw = 'Raw',
 }
 
+export type TuyaDeviceFunctionProperty = TuyaDeviceFunctionIntegerProperty
+  | TuyaDeviceFunctionEnumProperty
+  | TuyaDeviceFunctionJSONProperty;
+
+export type TuyaDeviceFunction = {
+  code: string;
+  name: string;
+  desc: string;
+  type: TuyaDeviceFunctionType;
+  values: string;
+};
+
 export type TuyaDeviceSchemaIntegerProperty = {
   min: number;
   max: number;
@@ -64,6 +76,7 @@ export default class TuyaDevice {
   icon!: string;
   category!: string;
   schema!: TuyaDeviceSchema[];
+  functions!: TuyaDeviceFunction[];
 
   // status
   status!: TuyaDeviceStatus[];
