@@ -19,7 +19,6 @@ export default class LockAccessory extends BaseAccessory {
             this.Characteristic.LockCurrentState.SECURED;
         });
     }
-  }
 
   if (this.device.getDeviceFunction('unlock_app')) {
     // TODO
@@ -38,5 +37,6 @@ export default class LockAccessory extends BaseAccessory {
         }]);
       });
   }
+}
 
 }
