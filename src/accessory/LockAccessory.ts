@@ -39,7 +39,7 @@ export class TuyaSmartLockJTMSPro {
       this.lock();
     } else if (state === Characteristic.LockTargetState.UNSECURED) {
       this.unlock();
-       }
+    }
     callback(null);
   }
 
@@ -52,6 +52,5 @@ export class TuyaSmartLockJTMSPro {
     } catch (err) {
       log.debug('Error setting JTMSPro lock state: ', err);
     }
-  }
-   
+  }  
 }
