@@ -95,7 +95,7 @@ export default class AccessoryFactory {
         handler = new WindowCoveringAccessory(platform, accessory);
         break;
       case 'jtmspro':
-        handler = new LockAccessory(plaform, accessory);
+        handler = new LockAccessory(platform, accessory);
         break;
       case 'wk':
       case 'wkf':
