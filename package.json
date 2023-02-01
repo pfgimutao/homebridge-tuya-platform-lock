@@ -21,7 +21,7 @@
     "test": "jest",
     "watch": "npm run build && npm link && nodemon",
     "launch": "tsc && homebridge -I -D",
-    "build": "rimraf ./dist && tsc",
+    "build": "rimraf ./dist && tsc"
   },
   "keywords": [
     "homebridge-plugin",
