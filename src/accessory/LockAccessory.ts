@@ -1,5 +1,5 @@
-import { PlatformAccessory, Service, Characteristic } from "homebridge";
-import { TuyaDevice } from "tuyapi";
+import { PlatformAccessory, Service, Characteristic } from 'homebridge';
+import { TuyaDevice } from 'tuyapi';
 
 export class TuyaSmartLockJTMSPro {
     private locked: boolean;
@@ -15,22 +15,22 @@ export class TuyaSmartLockJTMSPro {
             id: deviceId,
             key: localKey
         });
-        this.tuyaDevice.on("connected", () => {
+        this.tuyaDevice.on('connected', () => {
             this.tuyaDevice.get({schema: true}).then((data: any) => {
-                log.debug("Tuya Device Connected ", data);
+                log.debug('Tuya Device Connected', data);
             });
         });
         this.tuyaDevice.connect();
         this.lockService.getCharacteristic(Characteristic.LockCurrentState)
-            .on("get", this.getLockState.bind(this));
+            .on('get', this.getLockState.bind(this));
         this.lockService.getCharacteristic(Characteristic.LockTargetState)
-            .on("get", this.getLockState.bind(this))
-            .on("set", this.setLockState.bind(this));
+            .on('get', this.getLockState.bind(this))
+            .on('set', this.setLockState.bind(this));
     }
 
     getLockState(callback: (error: any, state: number) => void) {
-        this.tuyaDevice.get({dps: "1"}).then((state: any) => {
-            callback(null, state["1"] ? Characteristic.LockCurrentState.SECURED : Characteristic.LockCurrentState.UNSECURED);
+        this.tuyaDevice.get({dps: '1'}).then((state: any) => {
+            callback(null, state['1'] ? Characteristic.LockCurrentState.SECURED : Characteristic.LockCurrentState.UNSECURED);
         });
     }
 
@@ -48,11 +48,10 @@ export class TuyaSmartLockJTMSPro {
             await this.tuyaDevice.set({set: true, dps: 1});
             this.locked = true;
             this.lockService.updateCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
-            log.debug("JTMSPro Lock engaged");
+            log.debug('JTMSPro Lock engaged');
         } catch (err) {
-            log.debug("Error setting JTMSPro lock state: ", err);
+            log.debug('Error setting JTMSPro lock state: ', err);
         }
     }
-
-    
+   
 }
