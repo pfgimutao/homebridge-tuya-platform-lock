@@ -7,7 +7,7 @@ export class TuyaSmartLockJTMSPro {
     private lockService: Service;
     private tuyaDevice: TuyaDevice;
 
-    constructor(accessory: PlatformAccessory, deviceId: string, localKey: string) {
+    constructor(accessory: PlatformAccessory, deviceId: string, localKey: string, log: any) {
         this.locked = false;
         this.accessory = accessory;
         this.lockService = this.accessory.getService(Service.LockMechanism);
@@ -17,7 +17,7 @@ export class TuyaSmartLockJTMSPro {
         });
         this.tuyaDevice.on("connected", () => {
             this.tuyaDevice.get({schema: true}).then((data: any) => {
-                this.accessory.context.log.debug("Tuya Device Connected ", data);
+                log.debug("Tuya Device Connected ", data);
             });
         });
         this.tuyaDevice.connect();
@@ -48,19 +48,11 @@ export class TuyaSmartLockJTMSPro {
             await this.tuyaDevice.set({set: true, dps: 1});
             this.locked = true;
             this.lockService.updateCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.SECURED);
-            this.accessory.context.log.debug("JTMSPro Lock engaged");
+            log.debug("JTMSPro Lock engaged");
         } catch (err) {
-            this.accessory.context.log.debug("Error setting JTMSPro lock state: ", err);
+            log.debug("Error setting JTMSPro lock state: ", err);
         }
     }
 
-    async unlock() {
-        try {
-            await this.tuyaDevice.set({set: false, dps: 1});
-            this.locked = false;
-            this.lockService.updateCharacteristic(Characteristic.LockCurrentState, Characteristic.LockCurrentState.UNSECURED);
-            this.accessory.context.log.debug("JTMSPro Lock disengaged");
-        } catch (err) {
-            this.accessory.context.log.debug("Error setting JTMSPro lock state: ", err);
-        }
-    }
+    
+}
