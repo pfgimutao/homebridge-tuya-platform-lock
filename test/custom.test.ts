@@ -2,6 +2,7 @@
 import { describe, expect, test } from '@jest/globals';
 
 import TuyaOpenAPI from '../src/core/TuyaOpenAPI';
+import TuyaOpenMQ from '../src/core/TuyaOpenMQ';
 import TuyaDevice from '../src/device/TuyaDevice';
 
 import TuyaCustomDeviceManager from '../src/device/TuyaCustomDeviceManager';
