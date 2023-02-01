@@ -94,6 +94,9 @@ export default class AccessoryFactory {
       case 'clkg':
         handler = new WindowCoveringAccessory(platform, accessory);
         break;
+      case 'jtmspro':
+        handler = new LockAccessory(plaform, accessory);
+        break;
       case 'wk':
       case 'wkf':
         handler = new ThermostatAccessory(platform, accessory);
