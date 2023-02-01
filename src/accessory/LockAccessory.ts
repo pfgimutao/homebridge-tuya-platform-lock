@@ -52,5 +52,5 @@ export class TuyaSmartLockJTMSPro {
     } catch (err) {
       log.debug('Error setting JTMSPro lock state: ', err);
     }
-  }  
+  }
 }
