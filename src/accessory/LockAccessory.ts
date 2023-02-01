@@ -2,10 +2,6 @@ import { PlatformAccessory, Service, Characteristic } from 'homebridge';
 import { TuyaDevice } from 'tuyapi';
 
 export default class LockAccessory extends BaseAccessory {
-  private locked: boolean;
-  private accessory: PlatformAccessory;
-  private lockService: Service;
-  private tuyaDevice: TuyaDevice;
 
   constructor(accessory: PlatformAccessory, deviceId: string, localKey: string) {
     this.locked = false;
