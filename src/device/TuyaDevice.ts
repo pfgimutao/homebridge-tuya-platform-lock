@@ -90,4 +90,20 @@ export default class TuyaDevice {
     return this.id.startsWith('vdevo');
   }
 
+  getDeviceFunction(code: string) {
+    return this.functions.find(_function => _function.code === code);
+  }
+
+  getDeviceFunctionProperty(code: string) {
+    const deviceFunction = this.getDeviceFunction(code);
+    if (!deviceFunction) {
+      return;
+    }
+    return JSON.parse(deviceFunction.values) as TuyaDeviceFunctionProperty;
+  }
+
+  getDeviceStatus(code: string) {
+    return this.status.find(status => status.code === code);
+  }
+
 }
