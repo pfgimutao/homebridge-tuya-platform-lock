@@ -34,6 +34,7 @@ import TemperatureHumidityIRSensorAccessory from './TemperatureHumidityIRSensorA
 import CameraAccessory from './CameraAccessory';
 import SceneAccessory from './SceneAccessory';
 import AirConditionerAccessory from './AirConditionerAccessory';
+import LockAccessory from './LockAccessory';
 
 
 export default class AccessoryFactory {
