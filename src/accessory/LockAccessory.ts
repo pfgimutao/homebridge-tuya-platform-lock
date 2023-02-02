@@ -10,7 +10,7 @@ export default class LockAccessory extends BaseAccessory {
     const service = this.accessory.getService(this.Service.LockMechanism)
       || this.accessory.addService(this.Service.LockMechanism);
 
-    if (this.device.getDeviceStatus('special_control')) {
+    if (this.device.getDeviceStatus('lock_motor_control')) {
       service.getCharacteristic(this.Characteristic.LockCurrentState)
         .onGet(() => {
           const status = this.device.getDeviceStatus('special_control');
@@ -20,6 +20,7 @@ export default class LockAccessory extends BaseAccessory {
           } else if (check?.value === false && status?.value === true) {
             return this.Characteristic.LockCurrentState.UNSECURED;
           } else {
+            return this.Characteristic.LockCurrentState.UNKNOWN;
           }
         });
     }
@@ -35,6 +36,7 @@ export default class LockAccessory extends BaseAccessory {
           } else if (check?.value === false && status?.value === true) {
             return this.Characteristic.LockCurrentState.UNSECURED;
           } else {
+            return this.Characteristic.LockCurrentState.UNKNOWN;
           }
         })
         .onSet(value => {
