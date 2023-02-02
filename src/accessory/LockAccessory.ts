@@ -44,10 +44,10 @@ export default class LockAccessory extends BaseAccessory {
           return UNLOCKING;
         }
 
-      return STOPPED;
-    });
+        return STOPPED;
+      });
   }
-  
+
   configureTargetLockState() {
     const schema = this.getSchema(...SCHEMA_CODE.TARGET_LOCK_STATE);
     if (!schema) {
@@ -65,6 +65,6 @@ export default class LockAccessory extends BaseAccessory {
           code: schema.code,
           value: (value === LOCKED) ? false : true,
         }]);
-    });
+      });
   }
 }
