@@ -10,7 +10,7 @@ export default class LockAccessory extends BaseAccessory {
     const service = this.accessory.getService(this.Service.LockMechanism)
       || this.accessory.addService(this.Service.LockMechanism);
 
-    if (this.device.getDeviceStatus('lock_motor_control')) {
+    if (this.device.getDeviceStatus('special_control')) {
       service.getCharacteristic(this.Characteristic.LockCurrentState)
         .onGet(() => {
           const status = this.device.getDeviceStatus('special_control');
