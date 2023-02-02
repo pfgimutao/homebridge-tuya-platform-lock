@@ -140,7 +140,7 @@ export default class TuyaDevice {
 
   getDeviceStatus(code: string) {
     return this.status.find(status => status.code === code);
-  } 
+  }
 
   setDeviceStatus(code: string, value: string | number | boolean) {
     const deviceStatus = this.getDeviceStatus(code);
