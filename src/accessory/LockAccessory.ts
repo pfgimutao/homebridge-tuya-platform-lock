@@ -15,8 +15,8 @@ export default class LockAccessory extends BaseAccessory {
         .onGet(() => {
           const status = this.device.getDeviceStatus('special_control');
           return (status?.value as boolean) ?
-            this.Characteristic.LockCurrentState.SECURED :
-            this.Characteristic.LockCurrentState.UNSECURED;
+            this.Characteristic.LockCurrentState.UNSECURED :
+            this.Characteristic.LockCurrentState.SECURED;
         });
     }
 
@@ -26,14 +26,14 @@ export default class LockAccessory extends BaseAccessory {
         .onGet(() => {
           const status = this.device.getDeviceStatus('special_control');
           return (status?.value as boolean) ?
-            this.Characteristic.LockTargetState.SECURED :
-            this.Characteristic.LockTargetState.UNSECURED;
+            this.Characteristic.LockTargetState.UNSECURED :
+            this.Characteristic.LockTargetState.SECURED;
         })
         .onSet(value => {
           const status = this.device.getDeviceStatus('special_control');
           this.deviceManager.sendCommands(this.device.id, [{
             code: status!.code,
-            value: (value === this.Characteristic.LockTargetState.SECURED) ? true : false, // confused value
+            value: (value === this.Characteristic.LockTargetState.UNSECURED) ? true : false, // confused value
           }]);
         });
     }
