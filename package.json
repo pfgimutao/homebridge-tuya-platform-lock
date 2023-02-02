@@ -1,6 +1,6 @@
 {
   "name": "@pfgimutao/homebridge-tuya-platform-lock",
-  "version": "1.7.2-beta.2",
+  "version": "1.7.2-beta.3",
   "description": "Fork version of official Tuya Homebridge plugin. Brings a bunch of bug fix and new device support.",
   "license": "MIT",
   "repository": {
