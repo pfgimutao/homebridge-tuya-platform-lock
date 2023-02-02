@@ -58,7 +58,7 @@ export default class LockAccessory extends BaseAccessory {
     this.mainService(),getCharacteristic(this.Characteristic.TargetLockState)
       .onGet(() => {
         const status = this.getStatus(schema.code)!;
-        return status.value as boolean ? LOCKED ; UNLOCKED;
+        return status.value as boolean ? LOCKED : UNLOCKED;
       })
       .onSet(value => {
         this.sendCommands([{
