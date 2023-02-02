@@ -55,7 +55,7 @@ export default class LockAccessory extends BaseAccessory {
     }
 
     const { LOCKED, UNLOCKED } = this.Characteristic.TargetLockState;
-    this.mainService(),getCharacteristic(this.Characteristic.TargetLockState)
+    this.mainService().getCharacteristic(this.Characteristic.TargetLockState)
       .onGet(() => {
         const status = this.getStatus(schema.code)!;
         return status.value as boolean ? LOCKED : UNLOCKED;
