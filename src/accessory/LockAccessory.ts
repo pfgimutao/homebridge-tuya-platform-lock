@@ -1,70 +1,49 @@
+import { PlatformAccessory } from 'homebridge';
+import { TuyaPlatform } from '../platform';
 import BaseAccessory from './BaseAccessory';
-
-const SCHEMA_CODE = {
-  CURRENT_LOCK_STATE: ['lock_motor_state'],
-  TARGET_LOCK_STATE: ['special_control'],
-};
 
 export default class LockAccessory extends BaseAccessory {
 
-  requiredSchema() {
-    return [SCHEMA_CODE.TARGET_LOCK_STATE];
-  }
+  constructor(platform: TuyaPlatform, accessory: PlatformAccessory) {
+    super(platform, accessory);
 
-  configureServices() {
-
-    this.configureCurrentLockState();
-    this.configureTargetLockState();
-  }
-
-  mainService() {
-    return this.accessory.getService(this.Service.LockMechanism)
+    const service = this.accessory.getService(this.Service.LockMechanism)
       || this.accessory.addService(this.Service.LockMechanism);
-  }
 
-  configureCurrentLockState() {
-    const { LOCKED, UNLOCKED, LOCKING, UNLOCKING, STOPPED } = this.Characteristic.CurrentLockState;
-    this.mainService().getCharacteristic(this.Characteristic.CurrentLockState)
-      .onGET(() => {
-        const currentSchema = this.getSchema(...SCHEMA_CODE.CURRENT_LOCK_STATE);
-        const targetSchema = this.getSchema(...SCHEMA_COD.TARGET_LOCK_STATE);
-        if (!currentSchema || !targetSchema) {
-          return STOPPED;
-        }
-
-        const currentStatus = this.getStatus(currentSchema.code)!;
-        const targetStatus = this.getStatus(targetSchema.code)!;
-        if (currentStatus.value === false && targetStatus.value === false) {
-          return LOCKED;
-        } else if (currentStatus.value === true && targetStatus.value === false) {
-          return LOCKING;
-        } else if (currentStatus.value === false && targetStatus.value === true) {
-          return UNLOCKED;
-        } else if (currentStatus.value === true && targetStatus.value === true) {
-          return UNLOCKING;
-        }
-
-        return STOPPED;
-      });
-  }
-
-  configureTargetLockState() {
-    const schema = this.getSchema(...SCHEMA_CODE.TARGET_LOCK_STATE);
-    if (!schema) {
-      return;
+    if (this.device.getDeviceStatus('special_control')) {
+      service.getCharacteristic(this.Characteristic.LockCurrentState)
+        .onGet(() => {
+          const status = this.device.getDeviceStatus('special_control');
+          const check = this.device.getDeviceStatus('lock_motor_control');
+          if (check?.value === false && status?.value === false) {
+            return this.Characteristic.LockCurrentState.SECURED;
+          } else (check?.value === false && status?.value === true) {
+            return this.Characteristic.LockCurrentState.UNSECURED;
+          }
+        });
     }
 
-    const { LOCKED, UNLOCKED } = this.Characteristic.TargetLockState;
-    this.mainService().getCharacteristic(this.Characteristic.TargetLockState)
-      .onGet(() => {
-        const status = this.getStatus(schema.code)!;
-        return status.value as boolean ? LOCKED : UNLOCKED;
-      })
-      .onSet(value => {
-        this.sendCommands([{
-          code: schema.code,
-          value: (value === LOCKED) ? false : true,
-        }]);
-      });
+    if (this.device.getDeviceStatus('special_control')) {
+      // TODO
+      service.getCharacteristic(this.Characteristic.LockTargetState)
+        .onGet(() => {
+          const status = this.device.getDeviceStatus('special_control');
+          const check = this.device.getDeviceStatus('lock_motor_control');
+          if (check?.value === false && status?.value === false) {
+            return this.Characteristic.LockCurrentState.SECURED;
+          } else (check?.value === false && status?.value === true) {
+            return this.Characteristic.LockCurrentState.UNSECURED;
+          }
+        })
+        .onSet(value => {
+          const status = this.device.getDeviceStatus('special_control');
+          this.deviceManager.sendCommands(this.device.id, [{
+            code: status!.code,
+            value: (value === this.Characteristic.LockTargetState.UNSECURED) ? true : false, // confused value
+          }]);
+        });
+    }
+
   }
+
 }
