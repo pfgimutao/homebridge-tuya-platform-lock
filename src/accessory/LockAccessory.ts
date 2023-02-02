@@ -10,25 +10,43 @@ export default class LockAccessory extends BaseAccessory {
     const service = this.accessory.getService(this.Service.LockMechanism)
       || this.accessory.addService(this.Service.LockMechanism);
 
-    if (this.device.getDeviceStatus('lock_motor_state')) {
+    if (this.device.getDeviceStatus('special_control')) {
       service.getCharacteristic(this.Characteristic.LockCurrentState)
         .onGet(() => {
-          const status = this.device.getDeviceStatus('lock_motor_state');
+          const status = this.device.getDeviceStatus('special_control');
           return (status?.value as boolean) ?
-            this.Characteristic.LockCurrentState.UNSECURED :
-            this.Characteristic.LockCurrentState.SECURED;
+            this.Characteristic.LockCurrentState.SECURED :
+            this.Characteristic.LockCurrentState.UNSECURED;
         });
-      //For Testing (Locking and Unlocking) if possible to use setDeviceStatus
+    }
+
+    if (this.device.getDeviceFunction('special_control')) {
+      // TODO
       service.getCharacteristic(this.Characteristic.LockTargetState)
         .onGet(() => {
-          const status = this.device.getDeviceStatus('lock_motor_state');
+          const status = this.device.getDeviceStatus('special_control');
           return (status?.value as boolean) ?
-            this.Characteristic.LockTargetState.UNSECURED :
-            this.Characteristic.LockTargetState.SECURED;
+            this.Characteristic.LockTargetState.SECURED :
+            this.Characteristic.LockTargetState.UNSECURED;
         })
-        .onSet(async (value) => {
-          await this.device.setDeviceStatus('lock_motor_state', value === this.Characteristic.LockTargetState.UNSECURED);
+        .onSet(value => {
+          const status = this.device.getDeviceStatus('special_control');
+          this.deviceManager.sendCommands(this.device.id, [{
+            code: status!.code,
+            value: (value === this.Characteristic.LockTargetState.SECURED) ? true : false, // confused value
+          }]);
         });
+      //For Testing (Locking and Unlocking) if possible to use setDeviceStatus
+      //service.getCharacteristic(this.Characteristic.LockTargetState)
+        //.onGet(() => {
+          //const status = this.device.getDeviceStatus('lock_motor_state');
+          //return (status?.value as boolean) ?
+            //this.Characteristic.LockTargetState.UNSECURED :
+            //this.Characteristic.LockTargetState.SECURED;
+        //})
+        //.onSet(async (value) => {
+          //await this.device.setDeviceStatus('lock_motor_state', value === this.Characteristic.LockTargetState.UNSECURED);
+        //});
     }
 
   }
