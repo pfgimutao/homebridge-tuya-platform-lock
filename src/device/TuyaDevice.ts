@@ -147,6 +147,6 @@ export default class TuyaDevice {
     if (!deviceStatus) {
       return;
     }
-    deviceStatus.value = value:
+    deviceStatus.value = value;
   }
 }
