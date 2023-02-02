@@ -18,6 +18,17 @@ export default class LockAccessory extends BaseAccessory {
             this.Characteristic.LockCurrentState.UNSECURED :
             this.Characteristic.LockCurrentState.SECURED;
         });
+      //For Testing (Locking and Unlocking) if possible to use setDeviceStatus
+      service.getCharacteristic(this.Characteristic.LockTargetState)
+        .onGet(() => {
+          const status = this.device.getDeviceStatus('lock_motor_state');
+          return (status?.value as boolean) ?
+            this.Characteristic.LockTargetState.UNSECURED :
+            this.Characteristic.LockTargetState.SECURED;
+        })
+        .onSet(async (value) => {
+          await this.device.setDeviceStatus('lock_motor_state', value === this.Characteristic.LockTargetState.UNSECURED);
+      });
     }
 
   }
