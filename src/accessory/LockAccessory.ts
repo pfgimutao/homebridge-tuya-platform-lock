@@ -28,7 +28,7 @@ export default class LockAccessory extends BaseAccessory {
         })
         .onSet(async (value) => {
           await this.device.setDeviceStatus('lock_motor_state', value === this.Characteristic.LockTargetState.UNSECURED);
-      });
+        });
     }
 
   }
