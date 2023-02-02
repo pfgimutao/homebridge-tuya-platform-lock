@@ -20,7 +20,7 @@ export default class LockAccessory extends BaseAccessory {
         });
     }
 
-    if (this.device.getDeviceFunction('special_control')) {
+    if (this.device.getDeviceStatus('special_control')) {
       // TODO
       service.getCharacteristic(this.Characteristic.LockTargetState)
         .onGet(() => {
