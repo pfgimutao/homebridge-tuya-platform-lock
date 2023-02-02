@@ -15,13 +15,9 @@ export default class LockAccessory extends BaseAccessory {
         .onGet(() => {
           const status = this.device.getDeviceStatus('special_control');
           const check = this.device.getDeviceStatus('lock_motor_control');
-          if (check?.value === true && status?.value === false) {
-            return this.Characteristic.LockCurrentState.UNSECURED;
-          } else if (check?.value === true && status?.value === true) {
-            return this.Characteristic.LockCurrentState.SECURED;
-          } else {
-            return this.Characteristic.LockCurrentState.UNKNOWN;
-          }
+          return (check?.value === status?.value) ?
+            this.Characteristic.LockCurrentState.SECURED :
+            this.Characteristic.LockCurrentState.UNSECURED;
         });
     }
 
