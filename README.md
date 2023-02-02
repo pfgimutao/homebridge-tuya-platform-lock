@@ -1,10 +1,10 @@
 # @pfgimutao/homebridge-tuya-platform
 
-[![npm](https://badgen.net/npm/v/pfgimutao/homebridge-tuya-platform-lock)](https://npmjs.com/package/pfgimutao/homebridge-tuya-platform-lock)
-[![npm](https://badgen.net/npm/dt/pfgimutao/homebridge-tuya-platform-lock)](https://npmjs.com/package/pfgimutao/homebridge-tuya-platform-lock)
-[![mit-license](https://badgen.net/npm/license/pfgimutao/homebridge-tuya-platform-lock)](https://github.com/pfgimuao/homebridge-tuya-platform-lock/blob/main/LICENSE)
+[![npm](https://badgen.net/npm/v/@pfgimutao/homebridge-tuya-platform-lock)](https://npmjs.com/package/pfgimutao/homebridge-tuya-platform-lock)
+[![npm](https://badgen.net/npm/dt/@pfgimutao/homebridge-tuya-platform-lock)](https://npmjs.com/package/pfgimutao/homebridge-tuya-platform-lock)
+[![mit-license](https://badgen.net/npm/license/@pfgimutao/homebridge-tuya-platform-lock)](https://github.com/pfgimuao/homebridge-tuya-platform-lock/blob/main/LICENSE)
 [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
-[![Build and Lint](https://github.com/pfgimutao/homebridge-tuya-platform-lock/actions/workflows/build.yml/badge.svg)](https://github.com/pfgimutao/homebridge-tuya-platform-lock/actions/workflows/build.yml)
+[![Build and Lint](https://github.com/@pfgimutao/homebridge-tuya-platform-lock/actions/workflows/build.yml/badge.svg)](https://github.com/pfgimutao/homebridge-tuya-platform-lock/actions/workflows/build.yml)
 [![join-discord](https://badgen.net/badge/icon/discord?icon=discord&label=homebridge/tuya)](https://discord.gg/homebridge-432663330281226270)
 
 
