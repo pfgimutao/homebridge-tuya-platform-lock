@@ -1,43 +1,58 @@
-import { PlatformAccessory } from 'homebridge';
-import { TuyaPlatform } from '../platform';
 import BaseAccessory from './BaseAccessory';
+
+const SCHEMA_CODE = {
+  LOCK_CURRENT_STATE: ['lock_motor_state'],
+  LOCK_TARGET_STATE: ['unlock_app'], // TODO: need physical device test
+};
 
 export default class LockAccessory extends BaseAccessory {
 
-  constructor(platform: TuyaPlatform, accessory: PlatformAccessory) {
-    super(platform, accessory);
+  requiredSchema() {
+    return [SCHEMA_CODE.LOCK_TARGET_STATE];
+  }
 
-    const service = this.accessory.getService(this.Service.LockMechanism)
+  configureServices() {
+    this.configureLockCurrentState();
+    this.configureLockTargetState();
+  }
+
+  mainService() {
+    return this.accessory.getService(this.Service.LockMechanism)
       || this.accessory.addService(this.Service.LockMechanism);
+  }
 
-    if (this.device.getDeviceStatus('special_control')) {
-      service.getCharacteristic(this.Characteristic.LockCurrentState)
-        .onGet(() => {
-          const status = this.device.getDeviceStatus('special_control');
-          return (status?.value as boolean) ?
-            this.Characteristic.LockCurrentState.UNSECURED :
-            this.Characteristic.LockCurrentState.SECURED;
-        });
+  configureLockCurrentState() {
+    const schema = this.getSchema(...SCHEMA_CODE.LOCK_CURRENT_STATE);
+    if (!schema) {
+      return;
     }
 
-    if (this.device.getDeviceStatus('special_control')) {
-      // TODO
-      service.getCharacteristic(this.Characteristic.LockTargetState)
-        .onGet(() => {
-          const status = this.device.getDeviceStatus('special_control');
-          return (status?.value as boolean) ?
-            this.Characteristic.LockTargetState.UNSECURED :
-            this.Characteristic.LockTargetState.SECURED;
-        })
-        .onSet(value => {
-          const status = this.device.getDeviceStatus('special_control');
-          this.deviceManager.sendCommands(this.device.id, [{
-            code: status!.code,
-            value: (value === this.Characteristic.LockTargetState.UNSECURED) ? true : false, // confused value
-          }]);
-        });
+    const { UNSECURED, SECURED } = this.Characteristic.LockCurrentState;
+    this.mainService().getCharacteristic(this.Characteristic.LockCurrentState)
+      .onGet(() => {
+        const status = this.getStatus(schema.code)!;
+        return (status.value as boolean) ? UNSECURED : SECURED;
+      });
+  }
+
+  configureLockTargetState() {
+    const schema = this.getSchema(...SCHEMA_CODE.LOCK_TARGET_STATE);
+    if (!schema) {
+      return;
     }
 
+    const { UNSECURED, SECURED } = this.Characteristic.LockTargetState;
+    this.mainService().getCharacteristic(this.Characteristic.LockTargetState)
+      .onGet(() => {
+        const status = this.getStatus(schema.code)!;
+        return (status.value !== 0) ? UNSECURED : SECURED;
+      })
+      .onSet(value => {
+        this.deviceManager.sendCommands(this.device.id, [{
+          code: schema.code,
+          value: (value === UNSECURED) ? 1 : 0, // confused value
+        }]);
+      });
   }
 
 }
