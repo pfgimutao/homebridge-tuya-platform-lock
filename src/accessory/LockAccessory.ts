@@ -2,7 +2,7 @@ import BaseAccessory from './BaseAccessory';
 
 const SCHEMA_CODE = {
   LOCK_CURRENT_STATE: ['lock_motor_state'],
-  LOCK_TARGET_STATE: ['unlock_app'], // TODO: need physical device test
+  LOCK_TARGET_STATE: ['unlock_phone_remote'], // TODO: need physical device test swapped unlock_app with unlock_phone_remote
 };
 
 export default class LockAccessory extends BaseAccessory {
