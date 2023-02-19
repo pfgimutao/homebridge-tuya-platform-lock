@@ -21,10 +21,6 @@ export default class LockAccessory extends BaseAccessory {
       || this.accessory.addService(this.Service.LockMechanism);
   }
 
-  getPass() {
-    return this.deviceManager.getDeviceKey(this.device.id) as unknown;
-  }
-
   configureLockCurrentState() {
     const schema = this.getSchema(...SCHEMA_CODE.LOCK_CURRENT_STATE);
     if (!schema) {
@@ -40,9 +36,8 @@ export default class LockAccessory extends BaseAccessory {
   }
 
   configureLockTargetState() {
-    const tempass = this.getPass() as string;
     const schema = this.getSchema(...SCHEMA_CODE.LOCK_CURRENT_STATE);
-    if (!schema || !tempass) {
+    if (!schema) {
       return;
     }
 
@@ -53,9 +48,10 @@ export default class LockAccessory extends BaseAccessory {
         return (status.value !== 0) ? UNSECURED : SECURED;
       })
       .onSet(value => {
+        const tempass = this.deviceManager.getDeviceKey(this.device.id) as unknown as string;
         this.deviceManager.sendLockCommands(this.device.id, [{
           ticket_id: tempass,
-          open: (value === UNSECURED) ? false : true, // confused value
+          open: (value === UNSECURED) ? true : false, // confused value
         }]);
       });
   }
