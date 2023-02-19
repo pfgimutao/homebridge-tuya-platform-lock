@@ -9,7 +9,6 @@ import TuyaDevice, {
   TuyaDeviceSchemaType,
   TuyaDeviceStatus,
   TuyaDeviceKey,
-  TuyaLock,
 } from './TuyaDevice';
 
 enum Events {
@@ -137,7 +136,7 @@ export default class TuyaDeviceManager extends EventEmitter {
       this.log.warn('Get Temporary Pass failed. devID = %s, code = %s, msg = %s', deviceID, res.code, res.msg);
       return[];
     }
-    return res.result as TuyaDeviceKey;
+    return res.result.ticket_id as TuyaDeviceKey;
   }
 
 

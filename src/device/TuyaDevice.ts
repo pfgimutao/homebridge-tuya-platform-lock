@@ -84,11 +84,6 @@ export type TuyaDeviceStatus = {
   value: string | number | boolean;
 };
 
-export type TuyaLock = {
-  ticket_id: string;
-  open: boolean;
-};
-
 export type TuyaDeviceKey = {
   expire_time: number;
   ticket_id: string;
@@ -112,7 +107,6 @@ export default class TuyaDevice {
   schema!: TuyaDeviceSchema[];
   functions!: TuyaDeviceFunction[];
   key!: TuyaDeviceKey[];
-  lock!: TuyaLock[];
 
   // status
   status!: TuyaDeviceStatus[];
