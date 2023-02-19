@@ -90,6 +90,11 @@ export type TuyaDeviceKey = {
   ticket_key: string;
 };
 
+export type TuyaLockSchema = {
+  ticket_id: string;
+  open: boolean;
+};
+
 export default class TuyaDevice {
 
   // device
