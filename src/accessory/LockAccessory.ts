@@ -22,7 +22,7 @@ export default class LockAccessory extends BaseAccessory {
   }
 
   getPass() {
-    return this.deviceManager.getDeviceKey(this.device.id);
+    return this.deviceManager.getDeviceKey(this.device.id) as unknown;
   }
 
   configureLockCurrentState() {
@@ -40,7 +40,7 @@ export default class LockAccessory extends BaseAccessory {
   }
 
   configureLockTargetState() {
-    const tempass = this.getPass();
+    const tempass = this.getPass() as string;
     const schema = this.getSchema(...SCHEMA_CODE.LOCK_CURRENT_STATE);
     if (!schema || !tempass) {
       return;
