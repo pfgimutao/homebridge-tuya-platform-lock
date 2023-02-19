@@ -9,6 +9,7 @@ import TuyaDevice, {
   TuyaDeviceSchemaType,
   TuyaDeviceStatus,
   TuyaDeviceKey,
+  TuyaLockSchema,
 } from './TuyaDevice';
 
 enum Events {
@@ -140,7 +141,7 @@ export default class TuyaDeviceManager extends EventEmitter {
   }
 
 
-  async sendLockCommands(deviceID: string) {
+  async sendLockCommands(deviceID: string, command: TuyaLockSchema[]) {
     const res = await this.api.post(`/v.1.0/devices/${deviceID}/door-lock/door-operate`);
     return res.result;
   }
