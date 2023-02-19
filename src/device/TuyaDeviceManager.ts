@@ -141,7 +141,7 @@ export default class TuyaDeviceManager extends EventEmitter {
 
 
   async sendLockCommands(deviceID: string) {
-    const res = await this.api.post('/v.1.0/devices/${deviceID}/door-lock/door-operate');
+    const res = await this.api.post(`/v.1.0/devices/${deviceID}/door-lock/door-operate`);
     return res.result;
   }
 
