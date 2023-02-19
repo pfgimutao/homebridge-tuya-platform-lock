@@ -36,8 +36,8 @@ export default class LockAccessory extends BaseAccessory {
   }
 
   configureLockTargetState() {
-    const pass = this.getKey(SCHEMA_CODE.LOCK_TARGET_STATE)
-    const schema = this.getSchema(...SCHEMA_CODE.LOCK_CURRENT_STATE)
+    const pass = this.getKey(SCHEMA_CODE.LOCK_TARGET_STATE);
+    const schema = this.getSchema(...SCHEMA_CODE.LOCK_CURRENT_STATE);
     if (!schema || !pass) {
       return;
     }
