@@ -55,7 +55,7 @@ export default class LockAccessory extends BaseAccessory {
       .onSet(value => {
         this.deviceManager.sendLockCommands(this.device.id, [{
           ticket_id: tempass,
-          open: (value === UNSECURED) ? true : false, // confused value
+          open: (value === UNSECURED) ? false : true, // confused value
         }]);
       });
   }
