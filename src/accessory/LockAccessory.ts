@@ -20,7 +20,7 @@ export default class LockAccessory extends BaseAccessory {
     return this.accessory.getService(this.Service.LockMechanism)
       || this.accessory.addService(this.Service.LockMechanism);
   }
-  
+
   getPass() {
     return this.deviceManager.getDeviceKey(this.device.id);
   }
