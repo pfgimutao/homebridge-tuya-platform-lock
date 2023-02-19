@@ -87,7 +87,7 @@ export type TuyaDeviceStatus = {
 export type TuyaLock = {
   ticket_id: string;
   open: boolean;
-}
+};
 
 export type TuyaDeviceKey = {
   expire_time: number;
