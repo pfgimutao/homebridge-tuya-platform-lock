@@ -84,6 +84,17 @@ export type TuyaDeviceStatus = {
   value: string | number | boolean;
 };
 
+export type TuyaLock = {
+  ticket_id: string;
+  open: boolean;
+}
+
+export type TuyaDeviceKey = {
+  expire_time: number;
+  ticket_id: string;
+  ticket_key: string;
+};
+
 export default class TuyaDevice {
 
   // device
@@ -100,6 +111,8 @@ export default class TuyaDevice {
   category!: string;
   schema!: TuyaDeviceSchema[];
   functions!: TuyaDeviceFunction[];
+  key!: TuyaDeviceKey[];
+  lock!: TuyaLock[];
 
   // status
   status!: TuyaDeviceStatus[];
@@ -140,6 +153,10 @@ export default class TuyaDevice {
 
   getDeviceStatus(code: string) {
     return this.status.find(status => status.code === code);
+  }
+
+  getDeviceKey(ticket_id: string) {
+    return this.key.find(key => key.ticket_id === ticket_id) as TuyaDeviceKey;
   }
 
   setDeviceStatus(code: string, value: string | number | boolean) {

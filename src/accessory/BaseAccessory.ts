@@ -145,6 +145,10 @@ class BaseAccessory {
     return undefined;
   }
 
+  getKey(ticket_id: string) {
+    return this.device.key.find(key => key.ticket_id === ticket_id);
+  }
+
   getStatus(code: string) {
     return this.device.status.find(status => status.code === code);
   }

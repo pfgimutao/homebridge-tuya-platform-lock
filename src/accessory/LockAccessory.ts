@@ -2,14 +2,14 @@ import BaseAccessory from './BaseAccessory';
 
 const SCHEMA_CODE = {
   LOCK_CURRENT_STATE: ['lock_motor_state'],
-  LOCK_TARGET_STATE: ['unlock_ble'], // TODO: need physical device test swapped unlock_app with unlock_ble
+  LOCK_TARGET_STATE: 'open', // TODO: need physical device test swapped unlock_app with unlock_ble
 };
 
 export default class LockAccessory extends BaseAccessory {
 
-  requiredSchema() {
-    return [SCHEMA_CODE.LOCK_TARGET_STATE];
-  }
+  //requiredSchema() {
+  //  return [SCHEMA_CODE.LOCK_TARGET_STATE];
+  //}
 
   configureServices() {
     this.configureLockCurrentState();
@@ -36,8 +36,9 @@ export default class LockAccessory extends BaseAccessory {
   }
 
   configureLockTargetState() {
-    const schema = this.getSchema(...SCHEMA_CODE.LOCK_TARGET_STATE);
-    if (!schema) {
+    const pass = this.getKey(SCHEMA_CODE.LOCK_TARGET_STATE)
+    const schema = this.getSchema(...SCHEMA_CODE.LOCK_CURRENT_STATE)
+    if (!schema || !pass) {
       return;
     }
 
@@ -48,9 +49,9 @@ export default class LockAccessory extends BaseAccessory {
         return (status.value !== 0) ? UNSECURED : SECURED;
       })
       .onSet(value => {
-        this.deviceManager.sendCommands(this.device.id, [{
-          code: schema.code,
-          value: (value === UNSECURED) ? 1 : 0, // confused value
+        this.deviceManager.sendLockCommands(this.device.id, [{
+          ticket_id: pass.ticket_id,
+          open: (value === UNSECURED) ? true : false, // confused value
         }]);
       });
   }

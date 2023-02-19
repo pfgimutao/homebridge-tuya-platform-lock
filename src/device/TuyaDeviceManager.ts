@@ -8,6 +8,8 @@ import TuyaDevice, {
   TuyaDeviceSchemaProperty,
   TuyaDeviceSchemaType,
   TuyaDeviceStatus,
+  TuyaDeviceKey,
+  TuyaLock,
 } from './TuyaDevice';
 
 enum Events {
@@ -125,6 +127,23 @@ export default class TuyaDeviceManager extends EventEmitter {
     }
 
     return Object.values(schemas).sort((a, b) => a.code > b.code ? 1 : -1) as TuyaDeviceSchema[];
+  }
+
+
+  async getDeviceKey(deviceID: string) {
+    // const res = await this.api.post(`/v1.0/smart-lock/devices/${deviceID}/door-lock/password-ticket`);
+    const res = await this.api.post(`/v1.0/devices/${deviceID}/door-lock/password-ticket`);
+    if (res.success === false) {
+      this.log.warn('Get Temporary Pass failed. devID = %s, code = %s, msg = %s', deviceID, res.code, res.msg);
+      return[];
+    }
+    return res.result as TuyaDeviceKey;
+  }
+
+
+  async sendLockCommands(deviceID: string, command: TuyaLock[] ) {
+    const res = await this.api.post('/v.1.0/devices/${deviceID}/door-lock/door-operate', { command });
+    return res.result;
   }
 
 
