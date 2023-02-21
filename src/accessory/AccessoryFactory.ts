@@ -95,6 +95,7 @@ export default class AccessoryFactory {
       case 'clkg':
         handler = new WindowCoveringAccessory(platform, accessory);
         break;
+      case 'ms' :
       case 'jtmspro':
         handler = new LockAccessory(platform, accessory);
         break;
