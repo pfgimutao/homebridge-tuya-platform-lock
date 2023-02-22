@@ -24,6 +24,15 @@ export enum TuyaDeviceFunctionType {
   Raw = 'Raw',
 }
 
+export enum TuyaDeviceID {
+  Boolean = 'Boolean',
+  Integer = 'Integer',
+  Enum = 'Enum',
+  String = 'String',
+  Json = 'Json',
+  Raw = 'Raw',
+}
+
 export type TuyaDeviceFunctionIntegerProperty = {
   min: number;
   max: number;
@@ -150,12 +159,20 @@ export default class TuyaDevice {
     return JSON.parse(deviceFunction.values) as TuyaDeviceFunctionProperty;
   }
 
-  getDeviceStatus(code: string) {
-    return this.status.find(status => status.code === code);
+  getDeviceKey(ticket_id: string) {
+    return this.key.find(key => key.ticket_id === ticket_id);
   }
 
-  getDeviceKey(ticket_id: string) {
-    return this.key.find(key => key.ticket_id === ticket_id) as TuyaDeviceKey;
+  getDeviceKeyID(ticket_id: string) {
+    const deviceKey = this.getDeviceKey(ticket_id);
+    if (!deviceKey) {
+      return;
+    }
+    return JSON.parse(deviceKey.ticket_id) as TuyaDeviceID;
+  }
+
+  getDeviceStatus(code: string) {
+    return this.status.find(status => status.code === code);
   }
 
   setDeviceStatus(code: string, value: string | number | boolean) {

@@ -2,14 +2,14 @@ import BaseAccessory from './BaseAccessory';
 
 const SCHEMA_CODE = {
   LOCK_CURRENT_STATE: ['lock_motor_state'],
-  LOCK_TARGET_STATE: 'open', // TODO: need physical device test swapped unlock_app with unlock_ble
+  LOCK_TARGET_STATE: ['open'], // TODO: need physical device test swapped unlock_app with unlock_ble
 };
 
 export default class LockAccessory extends BaseAccessory {
 
-  //requiredSchema() {
-  //  return [SCHEMA_CODE.LOCK_TARGET_STATE];
-  //}
+  requiredSchema() {
+    return [SCHEMA_CODE.LOCK_TARGET_STATE];
+  }
 
   configureServices() {
     this.configureLockCurrentState();
@@ -47,10 +47,10 @@ export default class LockAccessory extends BaseAccessory {
         const status = this.getStatus(schema.code)!;
         return (status.value !== 0) ? UNSECURED : SECURED;
       })
-      .onSet(value => {
-        const tempass = this.deviceManager.getDeviceKey(this.device.id) as unknown as string;
+      .onSet(async value => {
+        const tempass = await this.deviceManager.getDeviceKeyID(this.device.id);
         this.deviceManager.sendLockCommands(this.device.id, [{
-          ticket_id: tempass,
+          ticket_id: (tempass),
           open: (value === UNSECURED) ? true : false, // confused value
         }]);
       });
