@@ -2,14 +2,14 @@ import BaseAccessory from './BaseAccessory';
 
 const SCHEMA_CODE = {
   LOCK_CURRENT_STATE: ['lock_motor_state'],
-  //LOCK_TARGET_STATE: ['open'], // TODO: need physical device test swapped unlock_app with unlock_ble
+  LOCK_TARGET_STATE: ['lock_motor_state'], // TODO: need physical device test swapped unlock_app with unlock_ble
 };
 
 export default class LockAccessory extends BaseAccessory {
 
-  //requiredSchema() {
-  //  return [SCHEMA_CODE.LOCK_TARGET_STATE];
-  //}
+  requiredSchema() {
+    return [SCHEMA_CODE.LOCK_TARGET_STATE];
+  }
 
   configureServices() {
     this.configureLockCurrentState();
