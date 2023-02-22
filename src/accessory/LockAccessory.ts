@@ -7,9 +7,9 @@ const SCHEMA_CODE = {
 
 export default class LockAccessory extends BaseAccessory {
 
-  requiredSchema() {
-    return [SCHEMA_CODE.LOCK_TARGET_STATE];
-  }
+  //requiredSchema() {
+  //  return [SCHEMA_CODE.LOCK_TARGET_STATE];
+  //}
 
   configureServices() {
     this.configureLockCurrentState();
