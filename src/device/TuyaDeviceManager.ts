@@ -130,21 +130,20 @@ export default class TuyaDeviceManager extends EventEmitter {
     return Object.values(schemas).sort((a, b) => a.code > b.code ? 1 : -1) as TuyaDeviceSchema[];
   }
 
-
   async getDeviceKeyID(deviceID: string) {
     // const res = await this.api.post(`/v1.0/smart-lock/devices/${deviceID}/door-lock/password-ticket`);
     const res = await this.api.post(`/v1.0/smart-lock/devices/${deviceID}/password-ticket`);
-    //if (res.success === false) {
-    //  this.log.warn('Get Temporary Pass failed. devID = %s, code = %s, msg = %s', deviceID, res.code, res.msg);
-    //  return [];
-    //}
-    return JSON.parse(res.result.ticket_id); //as TuyaDeviceID;
+    if (res.success === false) {
+      this.log.warn('Get Temporary Pass failed. devID = %s, code = %s, msg = %s', deviceID, res.code, res.msg);
+      return [];
+    }
+    return res.result.ticket_id; //as TuyaDeviceID;
   }
 
 
-  async sendLockCommands(deviceID: string, command: TuyaLockSchema[]) {
-    const res = await this.api.post(`/v1.0/smart-lock/devices/${deviceID}/password-free/door-operate`, { command });
-    return res.result;
+  async sendLockCommands(deviceID: string, commands: TuyaLockSchema[]) {
+    const res = await this.api.post(`/v1.0/smart-lock/devices/${deviceID}/password-free/door-operate`, { commands });
+    return res;
   }
 
 

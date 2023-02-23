@@ -3,7 +3,7 @@
 import { PlatformAccessory, Service, Characteristic } from 'homebridge';
 import { debounce } from 'debounce';
 
-import { TuyaDeviceSchema, TuyaDeviceSchemaMode, TuyaDeviceSchemaProperty, TuyaDeviceStatus } from '../device/TuyaDevice';
+import { TuyaDeviceSchema, TuyaDeviceSchemaMode, TuyaDeviceSchemaProperty, TuyaDeviceStatus, TuyaLockSchema } from '../device/TuyaDevice';
 import { TuyaPlatform } from '../platform';
 import { limit } from '../util/util';
 import { PrefixLogger } from '../util/Logger';
@@ -322,4 +322,5 @@ export default class OverridedBaseAccessory extends BaseAccessory {
 
     super.sendCommands(commands, debounce);
   }
+
 }

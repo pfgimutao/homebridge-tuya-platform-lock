@@ -120,7 +120,7 @@ export default class TuyaDevice {
   category!: string;
   schema!: TuyaDeviceSchema[];
   functions!: TuyaDeviceFunction[];
-  key!: TuyaDeviceKey[];
+  key!: TuyaLockSchema[];
 
   // status
   status!: TuyaDeviceStatus[];
