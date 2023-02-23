@@ -19,7 +19,7 @@ export interface TuyaPlatformDeviceConfig {
 
 export interface TuyaPlatformCustomConfigOptions {
   projectType: '1';
-  endpoint?: string;
+  endpoint: string;
   accessId: string;
   accessKey: string;
   username: string;
@@ -29,6 +29,7 @@ export interface TuyaPlatformCustomConfigOptions {
 
 export interface TuyaPlatformHomeConfigOptions {
   projectType: '2';
+  endpoint?: string;
   accessId: string;
   accessKey: string;
   countryCode: number;

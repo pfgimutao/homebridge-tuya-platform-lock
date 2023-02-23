@@ -194,7 +194,7 @@ export class TuyaPlatform implements DynamicPlatformPlugin {
     res = await api.getToken();
     if (res.success === false) {
       this.log.error(`Get token failed. code=${res.code}, msg=${res.msg}`);
-      return null;
+      return undefined;
     }
 
 
@@ -279,7 +279,7 @@ export class TuyaPlatform implements DynamicPlatformPlugin {
     const deviceManager = new TuyaHomeDeviceManager(api);
 
     this.log.info('Log in to Tuya Cloud.');
-    res = await api.homeLogin(countryCode, username, password, appSchema);
+    res = await api.homeLogin(countryCode, username, password, appSchema, endpoint);
     if (res.success === false) {
       this.log.error(`Login failed. code=${res.code}, msg=${res.msg}`);
       if (LOGIN_ERROR_MESSAGES[res.code]) {
