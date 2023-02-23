@@ -142,7 +142,7 @@ export default class TuyaDeviceManager extends EventEmitter {
 
 
   async sendLockCommands(deviceID: string, commands: TuyaLockSchema) {
-    const res = await this.api.post(`/v1.0/smart-lock/devices/${deviceID}/password-free/door-operate`, { commands });
+    const res = await this.api.post(`/v1.0/smart-lock/devices/${deviceID}/password-free/door-operate`, commands);
     return res;
   }
 
