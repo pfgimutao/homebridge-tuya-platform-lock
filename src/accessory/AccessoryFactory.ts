@@ -36,7 +36,7 @@ import AirConditionerAccessory from './AirConditionerAccessory';
 import LockAccessory from './LockAccessory';
 import IRControlHubAccessory from './IRControlHubAccessory';
 import IRGenericAccessory from './IRGenericAccessory';
-import IRAirConditionerAccessory from '.IRAirConditionerAccessory';
+import IRAirConditionerAccessory from './IRAirConditionerAccessory';
 
 export default class AccessoryFactory {
   static createAccessory(
