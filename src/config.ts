@@ -2,12 +2,13 @@ import { PlatformConfig } from 'homebridge';
 import { TuyaDeviceSchemaProperty, TuyaDeviceSchemaType } from './device/TuyaDevice';
 
 export interface TuyaPlatformDeviceSchemaConfig {
-  oldCode: string;
   code: string;
+  newCode: string;
   type: TuyaDeviceSchemaType;
   property: TuyaDeviceSchemaProperty;
   onGet: string;
   onSet: string;
+  hidden: boolean;
 }
 
 export interface TuyaPlatformDeviceConfig {
@@ -18,7 +19,7 @@ export interface TuyaPlatformDeviceConfig {
 
 export interface TuyaPlatformCustomConfigOptions {
   projectType: '1';
-  endpoint: string;
+  endpoint?: string;
   accessId: string;
   accessKey: string;
   username: string;
@@ -57,6 +58,7 @@ export const homeOptionsSchema = {
   properties: {
     accessId: { type: 'string', required: true },
     accessKey: { type: 'string', required: true },
+    endpoint: { type: 'string', format: 'url' },
     countryCode: { 'type': 'integer', 'minimum': 1 },
     username: { type: 'string', required: true },
     password: { type: 'string', required: true },
