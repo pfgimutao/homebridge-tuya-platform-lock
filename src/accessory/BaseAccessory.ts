@@ -292,7 +292,7 @@ export default class OverridedBaseAccessory extends BaseAccessory {
       return undefined;
     }
 
-    const status = { code: schemaConfig.newcode || schemaConfig.code, value: oldStatus.value } as TuyaDeviceStatus;
+    const status = { code: schemaConfig.newCode || schemaConfig.code, value: oldStatus.value } as TuyaDeviceStatus;
     if (schemaConfig.onGet) {
       status.value = this.eval(schemaConfig.onGet, this.device, oldStatus.value);
     }
@@ -324,9 +324,9 @@ export default class OverridedBaseAccessory extends BaseAccessory {
       }
 
       if (!isEqual(oldCommand, command)) {
-        this.log.debug('Override command %o => %o', command, originalCommand);
-        command.code = originalCommand.code;
-        command.value = originalCommand.value;
+        this.log.debug('Override command %o => %o', command, oldCommand);
+        command.code = oldCommand.code;
+        command.value = oldCommand.value;
       }
     }
 
