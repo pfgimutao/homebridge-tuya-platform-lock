@@ -49,10 +49,10 @@ export default class LockAccessory extends BaseAccessory {
       })
       .onSet(async value => {
         const tempass = await this.deviceManager.getDeviceKeyID(this.device.id);
-        this.deviceManager.sendLockCommands(this.device.id, [{
+        this.deviceManager.sendLockCommands(this.device.id, {
           ticket_id: tempass,
-          open: (value === UNSECURED) ? false : true, // confused value
-        }]);
+          open: (value === UNSECURED) ? true : false, // confused value
+        });
       });
   }
 
