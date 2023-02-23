@@ -43,16 +43,16 @@ export default class LockAccessory extends BaseAccessory {
 
     const { UNSECURED, SECURED } = this.Characteristic.LockTargetState;
     this.mainService().getCharacteristic(this.Characteristic.LockTargetState)
+      .onGet(() => {
+        const status = this.getStatus(schema.code)!;
+        return (status.value !== 0) ? UNSECURED : SECURED;
+      })
       .onSet(async value => {
         const tempass = await this.deviceManager.getDeviceKeyID(this.device.id);
         this.deviceManager.sendLockCommands(this.device.id, {
           ticket_id: tempass,
           open: (value === UNSECURED) ? true : false, // confused value
         });
-      })
-      .onGet(() => {
-        const status = this.getStatus(schema.code)!;
-        return (status.value !== 1) ? UNSECURED : SECURED;
       });
   }
 
